@@ -49,7 +49,7 @@ module zx48_top
 localparam CONF_STR =
 {
 	"zx48;;",
-	"S0,VHD;",
+	"S0,VHD,Mount virtual SD;",
 	"O1,Model,48K,+2;",
 	"O2,DivMMC automapper,Enabled,Disabled;",
 	"T0,Reset;",
