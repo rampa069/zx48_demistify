@@ -1,6 +1,6 @@
 DEMISTIFYPATH=DeMiSTify
 SUBMODULES=$(DEMISTIFYPATH)/EightThirtyTwo/Makefile
-PROJECT=PROJECT
+PROJECT=zx48
 PROJECTPATH=./
 PROJECTTOROOT=../
 BOARD=neptuno uareloaded deca sidi mist

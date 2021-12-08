@@ -1,6 +1,6 @@
 # files inherited from the guest core:
 
-FILES.qip
+files.qip
 sys/sys.qip
 demistify_config_pkg.vhd
 

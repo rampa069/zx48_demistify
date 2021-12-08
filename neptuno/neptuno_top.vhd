@@ -123,7 +123,7 @@ architecture RTL of neptuno_top is
    signal  DAC_L : std_logic_vector(9 downto 0);
 	signal  DAC_R : std_logic_vector(9 downto 0);
 	
-COMPONENT  PCW
+COMPONENT  zx48_top
 	PORT
 	(
 		CLOCK_27 :	IN STD_LOGIC;
@@ -295,7 +295,7 @@ joy: joydecoder
 		joy2fire2		=> joy2fire2
 	);
 	
-guest: COMPONENT  PCW
+guest: COMPONENT  zx48_top
 	PORT map
 	(
 		CLOCK_27 => clock_50_i,
