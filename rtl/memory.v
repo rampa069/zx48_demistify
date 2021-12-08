@@ -182,7 +182,7 @@ wire[17:0] ramA
 	? { 1'b1, page, a[12:0] }
 	: { 1'b0, a[15:14] == 2'b01 ? 3'd5 : a[15:14] == 2'b10 ? 3'd2 : ramPage , a[13:0] };
 
-ram #(.KB(256)) Ram
+ram #(.KB(128)) Ram
 (
 	.clock  (clock  ),
 	.ce     (1'b1   ),

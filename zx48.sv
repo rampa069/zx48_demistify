@@ -49,15 +49,10 @@ module zx48_top
 localparam CONF_STR =
 {
 	"zx48;;",
-	"S,VHD;",
-	"-;",
+	"S0,VHD;",
 	"O1,Model,48K,+2;",
 	"O2,DivMMC automapper,Enabled,Disabled;",
-	"-;",
-	"O89,Aspect ratio,Original,Full Screen,[ARC1],[ARC2];",
-	"-;",
 	"T0,Reset;",
-	"R0,Reset and close OSD;",
 	"V,v1.2 ",`BUILD_DATE
 };
 
@@ -95,44 +90,44 @@ wire       ioctl_wr;
 
 wire forced_scandoubler;
 
-mist_io #(.STRLEN($size(CONF_STR)>>3)) hps_io
+mist_io #(.STRLEN($size(CONF_STR)>>3)) mist_io
 (
-	.clk_sys(clk_sys),
-	.conf_str(CONF_STR),
+	.clk_sys       (clk_sys),
+	.conf_str      (CONF_STR),
 
-   .SPI_SCK   (SPI_SCK),
-   .CONF_DATA0(CONF_DATA0),
-   .SPI_SS2   (SPI_SS2),
-   .SPI_DO    (SPI_DO),
-   .SPI_DI    (SPI_DI),
+   .SPI_SCK       (SPI_SCK),
+   .CONF_DATA0    (CONF_DATA0),
+   .SPI_SS2       (SPI_SS2),
+   .SPI_DO        (SPI_DO),
+   .SPI_DI        (SPI_DI),
 
-	.status(status),
+	.status        (status),
 
-	.ps2_key(ps2_key),
+	.ps2_key       (ps2_key),
 
-	.joystick_0(joystick_0),
-	.joystick_1(joystick_1),
+	.joystick_0    (joystick_0),
+	.joystick_1    (joystick_1),
 
-	.sd_lba(sd_lba),
-	.sd_rd(sd_rd),
-	.sd_wr(sd_wr),
-	.sd_ack(sd_ack),
-	.sd_ack_conf(sd_ack_conf),
-	.sd_buff_addr(sd_buff_addr),
-	.sd_buff_dout(sd_buff_dout),
-	.sd_buff_din(sd_buff_din),
-	.sd_buff_wr(sd_buff_wr),
+	.sd_lba        (sd_lba),
+	.sd_rd         (sd_rd),
+	.sd_wr         (sd_wr),
+	.sd_ack        (sd_ack),
+	.sd_ack_conf   (sd_ack_conf),
+	.sd_buff_addr  (sd_buff_addr),
+	.sd_buff_dout  (sd_buff_dout),
+	.sd_buff_din   (sd_buff_din),
+	.sd_buff_wr    (sd_buff_wr),
 	
-	.img_mounted(img_mounted),
+	.img_mounted   (img_mounted),
 	//.img_readonly(img_readonly),
-	.img_size(img_size),
+	.img_size      (img_size),
 
 	.ioctl_download(ioctl_download),
 	.ioctl_wr      (ioctl_wr      ),
 	.ioctl_addr    (ioctl_addr    ),
 	.ioctl_dout    (ioctl_dout    ),
 
-	.buttons(buttons),
+	.buttons       (buttons),
 	.scandoubler_disable(forced_scandoubler)
 );
 
@@ -273,12 +268,39 @@ zx48 ZX48
 
 wire ce_pix;
 
+video_mixer #(.LINE_LENGTH(720)) video_mixer
+(
+	.*,
+
+	.ce_pix(ce_pix),
+   .ce_pix_actual(ce_pix),
+   .scandoubler_disable(forced_scandoubler),
+	.hq2x(),
+	.mono(0),
+	.scanlines(),
+	.ypbpr(),
+   .ypbpr_full(0),
+   .line_start(0),
+
+
+	.R(rgb[23:18]),
+	.G(rgb[15:10]),
+	.B(rgb[7:2]),
+	.HSync(sync[0]),
+	.VSync(sync[1]),
+	.HBlank(blank[0]),
+	.VBlank(blank[1])
+	
+
+);
+
+
 //assign VGA_DE    = ~|blank;
-assign VGA_HS    = sync[0];
-assign VGA_VS    = sync[1];
-assign VGA_R     = rgb[23:16];
-assign VGA_G     = rgb[15: 8];
-assign VGA_B     = rgb[ 7: 0];
+//assign VGA_HS    = sync[0];
+//assign VGA_VS    = sync[1];
+//assign VGA_R     = rgb[23:16];
+//assign VGA_G     = rgb[15: 8];
+//assign VGA_B     = rgb[ 7: 0];
 
 assign LED       = vsd_sel & sd_act;
 
